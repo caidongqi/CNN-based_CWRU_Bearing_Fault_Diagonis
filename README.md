@@ -75,6 +75,50 @@ pip install keras==2.3.1
 ### CNN卷积神经网络的搭建
 我们的模型是使用卷积神经网络（Convolutional Neural Networks. CNN）训练出来的，想了解其原理的，可以参考[一篇CSDN的博客](https://blog.csdn.net/love__live1/article/details/79481052)，讲的很通俗易懂，关键是画的图十分地形象，推荐刚接触CNN的可以抽空阅读一下。
 
+下面是模型建立的核心代码：
+```sh
+x_train, x_valid, x_test = x_train[:,:,np.newaxis], x_valid[:,:,np.newaxis], x_test[:,:,np.newaxis]   #如果使用两个特征，则注释这一行
+
+# 输入数据的维度
+input_shape =x_train.shape[1:]
+# 实例化一个Sequential
+model = Sequential()
+
+#第一层卷积
+model.add(Conv1D(filters=64, kernel_size=20, strides=8, padding='same',kernel_regularizer=l2(1e-4), input_shape=input_shape))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+model.add(MaxPooling1D(pool_size=4, strides=4, padding='valid'))
+
+
+# 从卷积到全连接需要展平
+model.add(Flatten())
+
+# 添加全连接层
+model.add(Dense(units=100, activation='relu', kernel_regularizer=l2(1e-4)))
+# 增加输出层，共num_classes个单元
+model.add(Dense(units=num_classes, activation='softmax', kernel_regularizer=l2(1e-4)))
+
+
+# 编译模型
+model.compile(optimizer='Adam', loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+# TensorBoard调用查看一下训练情况
+tb_cb = TensorBoard(log_dir='logs/{}'.format(model_name))
+
+# 开始模型训练
+model.fit(x=x_train, y=y_train, batch_size=batch_size, epochs=epochs,
+          verbose=1, validation_data=(x_valid, y_valid), shuffle=True,
+          callbacks=[tb_cb])
+
+# 评估模型
+score = model.evaluate(x=x_test, y=y_test, verbose=0)
+print("测试集上的损失率：", score[0])
+print("测试集上的准确率：", score[1])
+# plot_model(model=model, to_file='cnn-1D.png', show_shapes=True)
+```
+
 本次课设中，我们利用keras搭建了一个一维的卷积网络，网络中有20个卷积核，卷积步长为8。使用Relu函数作为激活函数，池化方式选择最大值池化。因为CNN自带卷积特征提取，故`数据预处理`阶段只用进行**加窗处理**。然后取到处理后的1024帧的数据，按照3：6：1的比例划分测试集、训练集和验证集，将训练集的数据作为输入传入网络中进行训练，同时每一轮训练完毕之后，用验证集合查看训练的结果。全部训练结束之后，用测试集来最终确定模型的优良程度。
 ### 模型预测结果展示
 ![CNN结果展示](picture/CNN_result_presentation.png)
