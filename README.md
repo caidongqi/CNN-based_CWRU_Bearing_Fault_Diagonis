@@ -43,6 +43,24 @@ Bupt 移动网互联网应用开发课程设计
 经过上述的分析，我们给出了我们的小程序的原型图。
 ![小程序初稿](picture/3.png)
 ## APP界面和功能展示
+1. app共三个主界面Macine、Logs、more
+
+2. Machine负责查询某个设备的具体故障信息，由设备参数、故障类型及设备状态曲线图组成
+
+![图一](picture/m1.png)
+![图二](picture/m2.png)
+![图三](picture/m3.png)
+
+3. Logs负责用户实时提交表单，便于查看和统计
+
+![图四](picture/L1.png)
+![图五](picture/L2.png)
+
+4. more负责附加功能，展示维修零件库存和联系维修员
+
+![图六](picture/m11.png)
+![图七](picture/m22.png)
+![图八](picture/m33.png)
 
 ## CWRU数据集预测模型
 
@@ -127,26 +145,11 @@ print("测试集上的准确率：", score[1])
 ### 微信小程序云函数
 ### API 调用
 ### 微信小程序前端设计
+1. 根据设计出的小程序原型图，在app.json文件中设计总体板块样式
+2. 在pages文件夹创建不同的子文件夹，不同的子文件夹对应不同的页面
+3. 运用微信开发者工具提供的官方文档中的函数和模块实现功能
+4. 对小程序的美观性进行润色，分别针对每个wxss文件进行设计
 ### 微信小程序后端设计
-
-
-
-`标准 Readme` 最开始因为 [@maxogden](https://github.com/maxogden) 在项目 [feross/standard](https://github.com/feross/standard) 的[这个 
-
-1. 一个定义良好的**规范**。在仓库中的位置是 [spec.md](spec.md)。它是一个一直在持续优化的文档，欢迎您提 Issue 讨论其中的变化。
-2. 一个**示例 README**。这个 Readme 完全遵从 Standard-readme，而且在 `example-readmes` 文件夹里有更多的示例。
-3. 一个**语法提示器**用来提示在 Readme 中的语法错误。请参考 [tracking issue](https://github.com/RichardLitt/standard-readme/issues/5)。
-4. 一个**生成器**用来快速搭建新的 README 的框架。请参考 [generator-standard-readme](https://github.com/RichardLitt/generator-standard-readme)。
-5. 一个**标识准守规范的徽章**。请参考
-
-## 安装
-
-这个项目使用 [node](http://nodejs.org) 和 [npm](https://npmjs.com)。请确保你本地安装了它们。
-
-```sh
-$ npm install --global standard-readme-spec
-```
-
 
 ## 相关仓库
 
